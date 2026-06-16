@@ -6,19 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>BUZZTER (バズター) - 何をしても万バズするSNS</title>
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
   <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="[https://unpkg.com/lucide@latest](https://unpkg.com/lucide@latest)"></script>
   <!-- Canvas Confetti for celebration -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="[https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js](https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js)"></script>
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="[https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght=300;400;500;700;900&display=swap](https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght=300;400;500;700;900&display=swap)" rel="stylesheet">
   <style>
+    html, body {
+      background-color: #000000;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background-color: #000000;
       color: #e7e9ea;
-      overflow-x: hidden;
     }
     /* 虹色の背景 */
     .rainbow-bg {
@@ -50,22 +55,22 @@
     .toast-animate {
       animation: slide-in 0.2s ease forwards;
     }
-    /* クロップオーバーレイ用：外側を暗くくり抜くマスク */
+    /* クロップオーバーレイ用：コンテナサイズ(300px)を覆うのに十分な、はみ出さない安全なサイズの影 */
     .crop-mask-circle {
-      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 0 0 150px rgba(0, 0, 0, 0.75);
       border-radius: 9999px;
     }
   </style>
 </head>
 <body class="min-h-screen flex justify-center bg-black overflow-y-scroll">
 
-  <!-- アプリメインコンテナ (Xのモバイル表示幅を完全再現 & 巨大なマスク影のハみ出しをカット) -->
+  <!-- アプリメインコンテナ (幅をw-fullにし、overflow-hiddenで画面外ハみ出しを完全カット) -->
   <div id="app" class="w-full max-w-lg min-h-screen bg-black border-x border-[#2f3336] flex flex-col relative pb-16 overflow-hidden">
     
     <!-- ==========================================
          1. スタート画面 (初期セットアップ)
          ========================================== -->
-    <div id="setup-screen" class="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6">
+    <div id="setup-screen" class="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6 overflow-y-auto">
       <!-- 虹色背景に白い炎のアイコン -->
       <div class="w-20 h-20 rounded-2xl rainbow-bg p-0.5 flex items-center justify-center shadow-lg shadow-pink-500/20 mb-6">
         <div class="w-full h-full rounded-[14px] flex items-center justify-center bg-black/10 backdrop-blur-xs">
@@ -77,7 +82,7 @@
       </div>
 
       <h1 class="text-3xl font-black text-white mb-1 tracking-tight">BUZZTER に参加する</h1>
-      <p class="text-[#71767b] text-sm mb-8 text-center">何を書いても、どんな画像を上げても確実に万バズする<br>究極の承認欲求チャージSNS。</p>
+      <p class="text-[#71767b] text-sm mb-8 text-center">何を書いても、どんな画像を上げても確実に万バズする<br>究極 of 承認欲求チャージSNS。</p>
 
       <div class="w-full space-y-5 bg-[#16181c] p-6 rounded-2xl border border-[#2f3336]">
         <!-- アカウント設定 -->
@@ -90,7 +95,7 @@
             </div>
             <div>
               <input type="file" id="avatar-input" accept="image/*" class="hidden">
-              <button onclick="document.getElementById('avatar-input').click()" class="px-4 py-2 bg-white hover:bg-neutral-200 text-black text-xs font-bold rounded-full transition">
+              <button type="button" onclick="document.getElementById('avatar-input').click()" class="px-4 py-2 bg-white hover:bg-neutral-200 text-black text-xs font-bold rounded-full transition">
                 画像を選択
               </button>
             </div>
@@ -107,7 +112,7 @@
           <input type="text" id="setup-username" value="buzz_master" class="w-full bg-black border border-[#2f3336] focus:border-pink-500 rounded-lg px-4 py-3 text-white text-sm focus:outline-none transition">
         </div>
 
-        <button onclick="startApp()" class="w-full py-3.5 bg-white hover:bg-neutral-200 text-black font-bold rounded-full shadow-lg transition text-center flex items-center justify-center space-x-2">
+        <button type="button" onclick="startApp()" class="w-full py-3.5 bg-white hover:bg-neutral-200 text-black font-bold rounded-full shadow-lg transition text-center flex items-center justify-center space-x-2">
           <span>バズる準備は完了</span>
           <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </button>
@@ -124,7 +129,7 @@
             <h3 class="font-bold text-white text-base">アイコン画像の位置調整</h3>
             <p class="text-xs text-pink-400 mt-0.5">明るい丸枠の内側がプロフィールアイコンになります</p>
           </div>
-          <button onclick="closeSimpleCropper()" class="text-[#71767b] hover:text-white transition">
+          <button type="button" onclick="closeSimpleCropper()" class="text-[#71767b] hover:text-white transition">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
@@ -133,10 +138,10 @@
           <!-- クロップエリアコンテナ (固定ピクセル 300px * 300px) -->
           <div style="width: 300px; height: 300px;" class="bg-neutral-950 relative overflow-hidden flex items-center justify-center border border-[#2f3336] rounded-xl">
             
-            <!-- 移動可能画像本体 (中心原点基準で完全同期) -->
+            <!-- 移動可能画像本体 -->
             <img id="sc-image" src="" alt="Cropping" class="absolute select-none pointer-events-none origin-center" style="transform: translate(0px, 0px) scale(1); max-width: none; max-height: none;">
             
-            <!-- 視覚的に完璧な丸型切り抜きガイド枠 (固定ピクセル 200px * 200px) -->
+            <!-- 視覚的に完璧な丸型切り抜きガイド枠 -->
             <div class="absolute inset-0 pointer-events-none z-10 flex items-center justify-center overflow-hidden">
               <div id="sc-mask-outline" style="width: 200px; height: 200px;" class="border-2 border-pink-500 absolute pointer-events-none z-20 crop-mask-circle">
                 <!-- 四隅の白い操作ノブ -->
@@ -174,8 +179,8 @@
         </div>
 
         <div class="p-4 border-t border-[#2f3336] flex space-x-3 bg-black/40">
-          <button onclick="closeSimpleCropper()" class="flex-1 py-2.5 bg-transparent border border-[#2f3336] hover:bg-[#2f3336]/30 text-[#e7e9ea] font-bold rounded-full text-sm transition">キャンセル</button>
-          <button onclick="applySimpleCrop()" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-sm transition shadow-lg shadow-pink-500/20">切り抜きを適用</button>
+          <button type="button" onclick="closeSimpleCropper()" class="flex-1 py-2.5 bg-transparent border border-[#2f3336] hover:bg-[#2f3336]/30 text-[#e7e9ea] font-bold rounded-full text-sm transition">キャンセル</button>
+          <button type="button" onclick="applySimpleCrop()" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-sm transition shadow-lg shadow-pink-500/20">切り抜きを適用</button>
         </div>
       </div>
     </div>
@@ -219,33 +224,33 @@
             <!-- 添付画像プレビュー -->
             <div id="home-attachment-preview-container" class="hidden relative mt-2 rounded-2xl overflow-hidden border border-[#2f3336] max-h-64 bg-[#16181c]">
               <img id="home-attachment-preview" src="" class="w-full h-full object-cover">
-              <button onclick="removeHomeAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
+              <button type="button" onclick="removeHomeAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
                 <i data-lucide="x" class="w-4 h-4"></i>
               </button>
             </div>
 
             <div class="flex items-center justify-between border-t border-[#2f3336]/50 pt-3 mt-2">
               <div class="flex items-center space-x-1">
-                <!-- 画像アップロード (ポスト時はクロップせずにそのまま添付) -->
-                <button onclick="document.getElementById('post-image-input').click()" class="p-2 text-pink-500 hover:bg-pink-500/10 rounded-full transition" title="画像を添付">
+                <!-- 画像アップロード -->
+                <button type="button" onclick="document.getElementById('post-image-input').click()" class="p-2 text-pink-500 hover:bg-pink-500/10 rounded-full transition" title="画像を添付">
                   <i data-lucide="image" class="w-5 h-5"></i>
                 </button>
                 <input type="file" id="post-image-input" accept="image/*" class="hidden">
 
                 <!-- AI画像生成（Imagen） -->
-                <button onclick="triggerAIImageGeneration('home')" class="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1" title="AIでバズる画像を生成">
+                <button type="button" onclick="triggerAIImageGeneration('home')" class="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1" title="AIでバズる画像を生成">
                   <i data-lucide="sparkles" class="w-5 h-5"></i>
                   <span class="text-xs font-bold hidden sm:inline">AI画像生成</span>
                 </button>
               </div>
-              <button onclick="createPost('home')" class="px-5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-extrabold rounded-full text-sm transition">
+              <button type="button" onclick="createPost('home')" class="px-5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-extrabold rounded-full text-sm transition">
                 ポストする
               </button>
             </div>
           </div>
         </div>
 
-        <!-- 新しいポストをお知らせするインジケーター（自動他者ツイート用） -->
+        <!-- 新しいポストをお知らせするインジケーター -->
         <div id="new-tweets-alert" class="hidden py-2 bg-pink-500 text-white text-center text-xs font-bold cursor-pointer hover:bg-pink-600 transition duration-200">
           ✨ 新しいタイムラインのポスト（タップで更新）
         </div>
@@ -260,7 +265,7 @@
       <div id="tab-post-detail" class="tab-content hidden">
         <!-- 戻るヘッダー -->
         <div class="p-3 border-b border-[#2f3336] flex items-center space-x-4 bg-black sticky top-12 z-20">
-          <button onclick="goBackToFeed()" class="p-1 hover:bg-[#16181c] rounded-full text-white transition">
+          <button type="button" onclick="goBackToFeed()" class="p-1 hover:bg-[#16181c] rounded-full text-white transition">
             <i data-lucide="arrow-left" class="w-5 h-5"></i>
           </button>
           <span class="font-bold text-base text-white">ポストする</span>
@@ -289,7 +294,7 @@
             <i data-lucide="bell" class="w-5 h-5 text-pink-500"></i>
             <span>通知</span>
           </h2>
-          <button onclick="clearNotifications()" class="text-xs text-[#71767b] hover:text-white transition">すべて既読</button>
+          <button type="button" onclick="clearNotifications()" class="text-xs text-[#71767b] hover:text-white transition">すべて既読</button>
         </div>
         <div id="notifications-list" class="divide-y divide-[#2f3336]">
           <!-- 通知がここに挿入されます -->
@@ -313,7 +318,7 @@
           <div class="absolute -top-10 left-4">
             <div class="relative group">
               <img id="profile-avatar" src="" alt="avatar" class="w-20 h-20 rounded-full border-4 border-black object-cover bg-black">
-              <button onclick="document.getElementById('avatar-input').click()" class="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition text-[10px] font-bold">
+              <button type="button" onclick="document.getElementById('avatar-input').click()" class="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition text-[10px] font-bold">
                 変更
               </button>
             </div>
@@ -321,7 +326,7 @@
 
           <!-- 編集ボタン -->
           <div class="flex justify-end pt-3">
-            <button onclick="openProfileEditModal()" class="px-4 py-1.5 border border-[#2f3336] hover:bg-[#16181c] text-white text-xs font-bold rounded-full transition">
+            <button type="button" onclick="openProfileEditModal()" class="px-4 py-1.5 border border-[#2f3336] hover:bg-[#16181c] text-white text-xs font-bold rounded-full transition">
               プロフィールを編集
             </button>
           </div>
@@ -339,7 +344,7 @@
               </div>
             </div>
 
-            <!-- フォロー・フォロワー (万バズ用特別数) -->
+            <!-- フォロー・フォロワー -->
             <div class="flex items-center space-x-4 mt-3 text-xs">
               <span class="text-[#71767b]"><strong class="text-white font-bold">82</strong> フォロー中</span>
               <span class="text-[#71767b]"><strong id="profile-followers-count" class="text-white font-bold">128.5万</strong> フォロワー</span>
@@ -347,7 +352,7 @@
           </div>
         </div>
 
-        <!-- プロフィールから直接投稿できるエリア (X風) -->
+        <!-- プロフィールから直接投稿できるエリア -->
         <div class="p-4 border-b border-[#2f3336] bg-black">
           <div class="flex space-x-3">
             <img id="profile-inline-avatar" src="" class="w-10 h-10 rounded-full border border-pink-500 object-cover flex-shrink-0">
@@ -357,25 +362,24 @@
               <!-- 添付プレビュー -->
               <div id="profile-attachment-preview-container" class="hidden relative mt-2 rounded-xl overflow-hidden border border-[#2f3336] max-h-48 bg-[#16181c]">
                 <img id="profile-attachment-preview" src="" class="w-full h-full object-cover">
-                <button onclick="removeProfileAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
+                <button type="button" onclick="removeProfileAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
                   <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
               </div>
 
               <div class="flex items-center justify-between mt-2 pt-2 border-t border-[#2f3336]">
                 <div class="flex space-x-2">
-                  <!-- 画像アップロード (プロフィールのインライン投稿もクロップなし) -->
-                  <button onclick="document.getElementById('profile-image-input').click()" class="p-1.5 text-pink-500 hover:bg-pink-500/10 rounded-full transition">
+                  <button type="button" onclick="document.getElementById('profile-image-input').click()" class="p-1.5 text-pink-500 hover:bg-pink-500/10 rounded-full transition">
                     <i data-lucide="image" class="w-4.5 h-4.5"></i>
                   </button>
                   <input type="file" id="profile-image-input" accept="image/*" class="hidden">
                   
-                  <button onclick="triggerAIImageGeneration('profile')" class="p-1.5 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1">
+                  <button type="button" onclick="triggerAIImageGeneration('profile')" class="p-1.5 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1">
                     <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
                     <span class="text-[10px] font-bold">AI画像</span>
                   </button>
                 </div>
-                <button onclick="createPost('profile')" class="px-4 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-xs transition">
+                <button type="button" onclick="createPost('profile')" class="px-4 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-xs transition">
                   ポストする
                 </button>
               </div>
@@ -401,7 +405,7 @@
             <i data-lucide="sparkles" class="w-5 h-5 text-cyan-400"></i>
             <span>Imagen 4.0 画像生成</span>
           </h3>
-          <button onclick="closeAIModal()" class="text-[#71767b] hover:text-white transition">
+          <button type="button" onclick="closeAIModal()" class="text-[#71767b] hover:text-white transition">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
@@ -423,11 +427,11 @@
           </div>
         </div>
         <div class="p-4 border-t border-[#2f3336] flex space-x-3 bg-black/40">
-          <button id="ai-generate-btn" onclick="generateAIImage()" class="flex-1 py-2.5 bg-cyan-500 text-black font-extrabold rounded-full text-sm hover:bg-cyan-400 transition flex items-center justify-center space-x-1">
+          <button type="button" id="ai-generate-btn" onclick="generateAIImage()" class="flex-1 py-2.5 bg-cyan-500 text-black font-extrabold rounded-full text-sm hover:bg-cyan-400 transition flex items-center justify-center space-x-1">
             <i data-lucide="wand-2" class="w-4 h-4"></i>
             <span>生成する</span>
           </button>
-          <button id="ai-apply-btn" onclick="applyAIImage()" class="hidden flex-1 py-2.5 bg-pink-500 text-white font-bold rounded-full text-sm hover:bg-pink-600 transition">この画像を使う</button>
+          <button type="button" id="ai-apply-btn" onclick="applyAIImage()" class="hidden flex-1 py-2.5 bg-pink-500 text-white font-bold rounded-full text-sm hover:bg-pink-600 transition">この画像を使う</button>
         </div>
       </div>
     </div>
@@ -439,7 +443,7 @@
       <div class="bg-[#16181c] w-full max-w-sm rounded-2xl border border-[#2f3336] overflow-hidden">
         <div class="p-4 border-b border-[#2f3336] flex justify-between items-center">
           <h3 class="font-bold text-white">プロフィールを編集</h3>
-          <button onclick="closeProfileEditModal()" class="text-[#71767b] hover:text-white transition">
+          <button type="button" onclick="closeProfileEditModal()" class="text-[#71767b] hover:text-white transition">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
@@ -458,8 +462,8 @@
           </div>
         </div>
         <div class="p-4 border-t border-[#2f3336] flex space-x-3 bg-black/40">
-          <button onclick="closeProfileEditModal()" class="flex-1 py-2.5 bg-transparent border border-[#2f3336] text-[#e7e9ea] font-bold rounded-full text-sm transition">キャンセル</button>
-          <button onclick="saveProfileEdit()" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-sm transition">保存</button>
+          <button type="button" onclick="closeProfileEditModal()" class="flex-1 py-2.5 bg-transparent border border-[#2f3336] text-[#e7e9ea] font-bold rounded-full text-sm transition">キャンセル</button>
+          <button type="button" onclick="saveProfileEdit()" class="flex-1 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full text-sm transition">保存</button>
         </div>
       </div>
     </div>
@@ -468,15 +472,15 @@
          7. ボトムナビゲーション (Xを模倣)
          ========================================== -->
     <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-lg bg-black/90 backdrop-blur-md border-t border-[#2f3336] flex justify-around py-3.5 z-30">
-      <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-pink-500 transition-colors">
+      <button type="button" onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-pink-500 transition-colors">
         <i data-lucide="home" class="w-6 h-6"></i>
       </button>
-      <button onclick="switchTab('notifications')" id="nav-notifications" class="flex flex-col items-center text-[#71767b] hover:text-white transition-colors relative">
+      <button type="button" onclick="switchTab('notifications')" id="nav-notifications" class="flex flex-col items-center text-[#71767b] hover:text-white transition-colors relative">
         <i data-lucide="bell" class="w-6 h-6"></i>
         <!-- 未読バッジ -->
         <span id="notification-badge" class="hidden absolute top-0 right-1 w-2.5 h-2.5 bg-pink-500 rounded-full text-[9px] font-bold text-white flex items-center justify-center"></span>
       </button>
-      <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-[#71767b] hover:text-white transition-colors">
+      <button type="button" onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-[#71767b] hover:text-white transition-colors">
         <i data-lucide="user" class="w-6 h-6"></i>
       </button>
     </nav>
@@ -496,7 +500,7 @@
     let currentUser = {
       name: "バズり散らかすマン",
       username: "buzz_master",
-      avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='url(%23rainbow)'/><defs><linearGradient id='rainbow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ff007f'/><stop offset='50%25' stop-color='%23ff00ff'/><stop offset='100%25' stop-color='%2300ffff'/></linearGradient></defs><text x='50' y='65' font-size='45' text-anchor='middle'>🔥</text></svg>",
+      avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='url(%23rainbow)'/><defs><linearGradient id='rainbow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23ff007f'/><stop offset='50%25' stop-color='%23ff00ff'/><stop offset='100%25' stop-color='%2300ffff'/></linearGradient></defs><text x='50' y='65' font-size='45' text-anchor='middle'>🔥</text></svg>",
       bio: "🔥 何を投稿しても絶対に1万いいねを超える選ばれしBUZZTER。バズりの神に愛されたアカウントです。世界中に私の魅力を発信中！",
       followers: "128.5万"
     };
@@ -510,7 +514,7 @@
     let currentTab = 'home';
     let focusedPostId = null; // 詳細表示しているポストID
 
-    // シンプルな新規クロッパーの一時状態 (絶対ピクセル対応)
+    // クロップ状態 (絶対ピクセル対応)
     let scState = {
       imgSrc: null,
       zoom: 1,
@@ -536,64 +540,64 @@
       {
         name: "サバンナ高橋の隣の猫",
         username: "savannah_cat",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fbbf24'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐱</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fbbf24'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐱</text></svg>",
         content: "飼い主がテレワーク会議中、カメラの後ろで必死に虚無を見つめてたら『何かいるんですか？！』って大騒ぎになって会議30分中断させた実績。今夜のおやつは抜きらしい。",
         likes: 6412,   // 1万未満
         reposts: 842,
         views: 68410,
         replies: [
-          { name: "ネコハッカー", username: "hack_cat", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='65' font-size='45' text-anchor='middle'>🧑‍💻</text></svg>", content: "猫様あるあるｗｗ背後に守護霊でも見えたのかな？", timestamp: "10分前" },
-          { name: "おやつ係", username: "snack_leader", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2360a5fa'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍖</text></svg>", content: "実績解除：会議破壊。おやつは多めにあげてください！", timestamp: "5分前" }
+          { name: "ネコハッカー", username: "hack_cat", avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='65' font-size='45' text-anchor='middle'>🧑‍💻</text></svg>", content: "猫様あるあるｗｗ背後に守護霊でも見えたのかな？", timestamp: "10分前" },
+          { name: "おやつ係", username: "snack_leader", avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2360a5fa'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍖</text></svg>", content: "実績解除：会議破壊。おやつは多めにあげてください！", timestamp: "5分前" }
         ],
         timestamp: "20分前"
       },
       {
         name: "限界社会人OLの日常",
         username: "work_limit_ol",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f472b6'/><text x='50' y='65' font-size='45' text-anchor='middle'>👩</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f472b6'/><text x='50' y='65' font-size='45' text-anchor='middle'>👩</text></svg>",
         content: "月曜日の朝に『仕事行きたくなさすぎて体がプリンになった』って上司にチャット送る夢見て飛び起きたら、本当に誤送信してて『カラメルソース多めでお願いします』って返ってきてた。今日私はどうすればいいですか？",
         likes: 4235,   // 1万未満
         reposts: 312,
         views: 41020,
         replies: [
-          { name: "やさしい先輩", username: "kind_senpai", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2334d399'/><text x='50' y='65' font-size='45' text-anchor='middle'>👨</text></svg>", content: "上司の返しセンスの塊すぎて草ｗｗ仕事がんばってプリンちゃん！", timestamp: "15分前" }
+          { name: "やさしい先輩", username: "kind_senpai", avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2334d399'/><text x='50' y='65' font-size='45' text-anchor='middle'>👨</text></svg>", content: "上司の返しセンスの塊すぎて草ｗｗ仕事がんばってプリンちゃん！", timestamp: "15分前" }
         ],
         timestamp: "35分前"
       },
       {
         name: "自炊を諦めた料理人",
         username: "no_cook_chef",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23a78bfa'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍳</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23a78bfa'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍳</text></svg>",
         content: "究極のめんどくさがり自炊：\n・冷凍うどんを器へ\n・卵を落とす\n・めんつゆを適当に\n・バターをのせてレンジでチン\n\n『悪魔の釜玉うどん』って呼んでるんだけど、もう全人類これでいいじゃん。",
         likes: 8941,   // 1万未満
         reposts: 1104,
         views: 89010,
         replies: [
-          { name: "うどんを愛しすぎた男", username: "udon_love", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f87171'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍜</text></svg>", content: "今日の晩御飯これにする！！天才！！", timestamp: "3分前" }
+          { name: "うどんを愛しすぎた男", username: "udon_love", avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f87171'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍜</text></svg>", content: "今日の晩御飯これにする！！天才！！", timestamp: "3分前" }
         ],
         timestamp: "1時間前"
       },
       {
         name: "バグと戦うエンジニア",
         username: "bug_slayer_zero",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2322d3ee'/><text x='50' y='65' font-size='45' text-anchor='middle'>👾</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2322d3ee'/><text x='50' y='65' font-size='45' text-anchor='middle'>👾</text></svg>",
         content: "深夜3時『なんでこのコード動かないんだよ……』\n朝10時『なんでこのコード動くんだよ……』\n\nプログラミングのこの『全知全能と無能のループ』誰か名前つけてほしい。",
         likes: 5124,   // 1万未満
         reposts: 642,
         views: 52041,
         replies: [
-          { name: "デバッガー", username: "error_detector", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e2e8f0'/><text x='50' y='65' font-size='45' text-anchor='middle'>🔍</text></svg>", content: "『神々の奇跡（ただし動作保証なし）』と呼んでます", timestamp: "8分前" }
+          { name: "デバッガー", username: "error_detector", avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e2e8f0'/><text x='50' y='65' font-size='45' text-anchor='middle'>🔍</text></svg>", content: "『神々の奇跡（ただし動作保証なし）』と呼んでます", timestamp: "8分前" }
         ],
         timestamp: "2時間前"
       }
     ];
 
-    // 新しくリアルタイムで追加される他ユーザーのポストネタ (★ギリ万バズしない数値)
+    // 新しくリアルタイムで追加される他ユーザーのポストネタ (★こちらもギリ万バズしない数値)
     const incomingTweetsTemplates = [
       {
         name: "豆知識を呟くペンギン",
         username: "penguin_facts",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2338bdf8'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐧</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2338bdf8'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐧</text></svg>",
         content: "ペンギンの足、実はめちゃくちゃ長いんですけど、皮下脂肪と羽毛で隠れてて見えないだけなんです。レントゲン写真見るとスクワットした状態でずっと固まってるの可愛すぎるから見てほしい。",
         likes: 7215,
         reposts: 924,
@@ -603,7 +607,7 @@
       {
         name: "激辛ラーメン愛好家",
         username: "spicy_ramen",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f87171'/><text x='50' y='65' font-size='45' text-anchor='middle'>🔥</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f87171'/><text x='50' y='65' font-size='45' text-anchor='middle'>🔥</text></svg>",
         content: "辛さ10倍の北極ラーメンに唐辛子を追加投入して食べた結果、今、お腹の中に太陽系が誕生してビッグバンを起こしています。トイレから実況しています。助けてください。",
         likes: 3105,
         reposts: 412,
@@ -613,7 +617,7 @@
       {
         name: "アイドルの推し活bot",
         username: "oshi_is_life",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f472b6'/><text x='50' y='65' font-size='45' text-anchor='middle'>💎</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f472b6'/><text x='50' y='65' font-size='45' text-anchor='middle'>💎</text></svg>",
         content: "推しが配信中に一瞬ウインクしただけで、全宇宙の暗黒物質が浄化されて世界平和が達成された音が聴こえた。本当に実在してくれてありがとうございます。",
         likes: 8520,
         reposts: 1205,
@@ -623,7 +627,7 @@
       {
         name: "マイペース犬モフ太",
         username: "mofu_doggy",
-        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fbbf24'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐶</text></svg>",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23fbbf24'/><text x='50' y='65' font-size='45' text-anchor='middle'>🐶</text></svg>",
         content: "散歩の途中で突然充電切れたみたいに歩くの拒否して地面と一体化する術を身につけた。通行人の方々が笑顔で写真撮ってくれるので、もう一生このままでいいかもしれないワン。",
         likes: 6140,
         reposts: 724,
@@ -641,7 +645,7 @@
         user: {
           name: "BUZZTER運営公式",
           username: "buzzter_official",
-          avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='65' font-size='45' text-anchor='middle'>👑</text></svg>"
+          avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='65' font-size='45' text-anchor='middle'>👑</text></svg>"
         },
         content: "BUZZTER（バズター）へようこそ！🚀\n\nここでは、あなたが投稿したすべてのポストが数秒で1万いいねを突破するバズり体験が可能です！\n\n💬 投稿（ポスト）をタップすると、投稿に集まった自動リプライやリアクションの詳細画面に移動します！早速タップしてみてください！",
         image: null,
@@ -652,14 +656,14 @@
           {
             name: "公式のファン",
             username: "official_fan",
-            avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2322c55e'/><text x='50' y='65' font-size='45' text-anchor='middle'>🤩</text></svg>",
+            avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2322c55e'/><text x='50' y='65' font-size='45' text-anchor='middle'>🤩</text></svg>",
             content: "投稿をタップしたら本当に詳細が見れた！リプライがめちゃくちゃリアルで面白いｗｗｗ",
             timestamp: "たった今"
           },
           {
             name: "通りすがり",
             username: "street_walker",
-            avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ef4444'/><text x='50' y='65' font-size='45' text-anchor='middle'>🚶</text></svg>",
+            avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ef4444'/><text x='50' y='65' font-size='45' text-anchor='middle'>🚶</text></svg>",
             content: "何を書いてもバズるの最高の脳汁SNSだなこれ。もう戻れないわ",
             timestamp: "たった今"
           }
@@ -726,7 +730,7 @@
             {
               name: "ネットの住人",
               username: "net_dweller",
-              avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='gray'/><text x='50' y='65' font-size='45' text-anchor='middle'>👾</text></svg>",
+              avatar: "data:image/svg+xml;utf8,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><rect width='100' height='100' fill='gray'/><text x='50' y='65' font-size='45' text-anchor='middle'>👾</text></svg>",
               content: "これ昨日一番笑ったかもしれないｗｗｗ",
               timestamp: "1分前"
             }
@@ -884,16 +888,16 @@
         </div>
 
         <div class="flex justify-around py-2.5 border-b border-[#2f3336] text-[#71767b]">
-          <button class="flex items-center space-x-1.5 hover:text-pink-500 transition">
+          <button type="button" class="flex items-center space-x-1.5 hover:text-pink-500 transition">
             <i data-lucide="message-circle" class="w-5 h-5"></i>
           </button>
-          <button onclick="simulateRepost('${post.id}')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition ${post.isReposted ? 'text-emerald-400' : ''}">
+          <button type="button" onclick="simulateRepost('${post.id}')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition ${post.isReposted ? 'text-emerald-400' : ''}">
             <i data-lucide="repeat" class="w-5 h-5"></i>
           </button>
-          <button onclick="simulateLike('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-500 transition ${post.isLiked ? 'text-pink-500' : ''}">
+          <button type="button" onclick="simulateLike('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-500 transition ${post.isLiked ? 'text-pink-500' : ''}">
             <i data-lucide="heart" class="w-5 h-5 ${post.isLiked ? 'fill-pink-500 text-pink-500' : ''}"></i>
           </button>
-          <button onclick="sharePost('${post.id}')" class="flex items-center space-x-1.5 hover:text-cyan-400 transition">
+          <button type="button" onclick="sharePost('${post.id}')" class="flex items-center space-x-1.5 hover:text-cyan-400 transition">
             <i data-lucide="share" class="w-5 h-5"></i>
           </button>
         </div>
@@ -921,15 +925,15 @@
             </div>
             <p class="text-sm text-slate-200 mt-1 whitespace-pre-line leading-relaxed">${rep.content}</p>
             <div class="flex space-x-12 mt-3 text-[#71767b]">
-              <button class="hover:text-pink-500 transition flex items-center space-x-1">
+              <button type="button" class="hover:text-pink-500 transition flex items-center space-x-1">
                 <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
                 <span class="text-[10px]">${Math.floor(Math.random() * 5)}</span>
               </button>
-              <button class="hover:text-emerald-400 transition flex items-center space-x-1">
+              <button type="button" class="hover:text-emerald-400 transition flex items-center space-x-1">
                 <i data-lucide="repeat" class="w-3.5 h-3.5"></i>
                 <span class="text-[10px]">${Math.floor(Math.random() * 12)}</span>
               </button>
-              <button class="hover:text-pink-500 transition flex items-center space-x-1">
+              <button type="button" class="hover:text-pink-500 transition flex items-center space-x-1">
                 <i data-lucide="heart" class="w-3.5 h-3.5"></i>
                 <span class="text-[10px]">${Math.floor(Math.random() * 45)}</span>
               </button>
@@ -994,17 +998,17 @@
             </div>
 
             <div class="flex items-center justify-between mt-3 px-2 text-[#71767b]">
-              <button onclick="viewPostDetail('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-400 transition">
+              <button type="button" onclick="viewPostDetail('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-400 transition">
                 <i data-lucide="message-circle" class="w-4 h-4"></i>
                 <span class="text-xs">${post.replies.length}</span>
               </button>
-              <button onclick="simulateRepost('${post.id}')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition ${post.isReposted ? 'text-emerald-400' : ''}">
+              <button type="button" onclick="simulateRepost('${post.id}')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition ${post.isReposted ? 'text-emerald-400' : ''}">
                 <i data-lucide="repeat" class="w-4 h-4"></i>
               </button>
-              <button onclick="simulateLike('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-500 transition ${post.isLiked ? 'text-pink-500' : ''}">
+              <button type="button" onclick="simulateLike('${post.id}')" class="flex items-center space-x-1.5 hover:text-pink-500 transition ${post.isLiked ? 'text-pink-500' : ''}">
                 <i data-lucide="heart" class="w-4 h-4 ${post.isLiked ? 'fill-pink-500 text-pink-500' : ''}"></i>
               </button>
-              <button onclick="sharePost('${post.id}')" class="flex items-center space-x-1.5 hover:text-cyan-400 transition">
+              <button type="button" onclick="sharePost('${post.id}')" class="flex items-center space-x-1.5 hover:text-cyan-400 transition">
                 <i data-lucide="share" class="w-4 h-4"></i>
               </button>
             </div>
@@ -1012,35 +1016,6 @@
         </div>
       `;
       return card;
-    }
-
-    function startApp() {
-      const nameInput = document.getElementById('setup-name').value.trim();
-      const usernameInput = document.getElementById('setup-username').value.trim();
-
-      if (nameInput) currentUser.name = nameInput;
-      if (usernameInput) currentUser.username = usernameInput;
-
-      document.getElementById('header-avatar').src = currentUser.avatar;
-      document.getElementById('post-avatar').src = currentUser.avatar;
-      document.getElementById('profile-avatar').src = currentUser.avatar;
-      document.getElementById('profile-inline-avatar').src = currentUser.avatar;
-      document.getElementById('profile-display-name').innerText = currentUser.name;
-      document.getElementById('profile-display-username').innerText = '@' + currentUser.username;
-      document.getElementById('profile-bio').innerText = currentUser.bio;
-      document.getElementById('profile-followers-count').innerText = currentUser.followers;
-
-      injectWelcomePost();
-      injectOtherUsersInitialPosts();
-
-      const setupScreen = document.getElementById('setup-screen');
-      setupScreen.style.transition = 'opacity 0.4s ease';
-      setupScreen.style.opacity = '0';
-      setTimeout(() => {
-        setupScreen.classList.add('hidden');
-      }, 400);
-
-      showToast("🎉 BUZZTER へようこそ！バズの海へ出かけよう！");
     }
 
     // ==========================================
@@ -1475,7 +1450,7 @@
       toast.className = "toast-animate w-full bg-pink-500 text-white px-4 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center justify-between";
       toast.innerHTML = `
         <span>${message}</span>
-        <button onclick="this.parentElement.remove()" class="text-white hover:opacity-80 ml-2">
+        <button type="button" onclick="this.parentElement.remove()" class="text-white hover:opacity-80 ml-2">
           <i data-lucide="x" class="w-3.5 h-3.5"></i>
         </button>
       `;
@@ -1490,7 +1465,7 @@
     }
 
     // ==========================================
-    // 精密イメージ添付 ＆ クロップ仕分け
+    // イメージ添付 ＆ クロップ仕分け
     // ==========================================
     function setupAttachmentInputs() {
       // ポスト画像：クロップせずに直接添付
@@ -1776,7 +1751,7 @@
       } catch (error) {
         console.error(error);
         showToast("⚠️ 生成に失敗しました。フォールバック画像をロードします。");
-        generatedImageBase64 = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=500";
+        generatedImageBase64 = "[https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=500](https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=500)";
         document.getElementById('ai-preview-img').src = generatedImageBase64;
         document.getElementById('ai-preview-container').classList.remove('hidden');
         document.getElementById('ai-apply-btn').classList.remove('hidden');
