@@ -12,59 +12,78 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <!-- メインコンテンツ -->
     <div class="w-full max-w-md">
-        <!-- ロゴ -->
         <div class="flex justify-center mb-6">
             <div class="w-20 h-20 bg-gradient-to-tr from-orange-500 to-purple-600 rounded-2xl flex items-center justify-center">
                 <span class="text-4xl">🔥</span>
             </div>
         </div>
 
-        <!-- タイトル -->
         <h1 class="text-3xl font-bold text-center mb-2">BUZZTER に参加する</h1>
         <p class="text-gray-400 text-center mb-8 text-sm">
             何を書いても、どんな画像を上げても確実に万バズする<br>究極の承認欲求チャージSNS。
         </p>
 
-        <!-- 登録フォームカード -->
         <div class="bg-[#1a1a1a] p-6 rounded-2xl shadow-xl border border-gray-800">
-            <form id="registerForm" class="space-y-6">
-                <!-- プロフィール画像 -->
+            <!-- フォームタグを使用せず、ボタンクリックでJavaScriptを動かす構成に変更 -->
+            <div class="space-y-6">
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">プロフィール画像</label>
                     <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 flex items-center justify-center text-2xl">🔥</div>
-                        <button type="button" class="bg-white text-black px-4 py-2 rounded-full font-bold text-sm">画像を選択</button>
+                        <img id="preview" src="https://via.placeholder.com/150" 
+                             class="w-16 h-16 rounded-full bg-gray-700 object-cover" onerror="this.src='https://ui-avatars.com/api/?name=BUZZTER'">
+                        
+                        <input type="file" id="fileInput" accept="image/*" class="hidden">
+                        <button type="button" onclick="document.getElementById('fileInput').click()" 
+                                class="bg-white text-black px-4 py-2 rounded-full font-bold text-sm hover:bg-gray-200 transition">
+                            画像を選択
+                        </button>
                     </div>
                 </div>
 
-                <!-- 名前 -->
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">名前</label>
-                    <input type="text" value="バズり散らかすマン" class="w-full bg-black border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-orange-500">
+                    <input type="text" id="name" placeholder="バズり散らかすマン" class="w-full bg-black border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-orange-500">
                 </div>
 
-                <!-- ユーザー名 -->
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">ユーザー名 (@)</label>
-                    <input type="text" value="buzz_master" class="w-full bg-black border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-orange-500">
+                    <input type="text" id="username" placeholder="buzz_master" class="w-full bg-black border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-orange-500">
                 </div>
 
-                <!-- 完了ボタン -->
-                <button type="submit" class="w-full bg-white text-black font-bold py-3.5 rounded-full hover:bg-gray-200 transition">
+                <!-- ボタンのクリックイベントを明示的に指定 -->
+                <button type="button" onclick="startBuzzter()"
+                        class="w-full bg-white text-black font-bold py-3.5 rounded-full hover:bg-gray-200 transition">
                     バズる準備は完了
                 </button>
-            </form>
+            </div>
         </div>
     </div>
 
     <script>
-        // フォーム送信のデモ用
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('準備が完了しました！');
+        // 画像プレビュー
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview').src = e.target.result;
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
         });
+
+        // 開始処理
+        function startBuzzter() {
+            const name = document.getElementById('name').value;
+            const username = document.getElementById('username').value;
+            
+            if (!name || !username) {
+                alert('名前とユーザー名を入力してください！');
+                return;
+            }
+            
+            alert(name + ' (@' + username + ') さん、バズる準備が完了しました！');
+        }
     </script>
 </body>
 </html>
