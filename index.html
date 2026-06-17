@@ -156,6 +156,13 @@
                 </button>
                 <input type="file" id="post-image-input" accept="image/*" class="hidden">
 
+                <!-- AI画像生成 -->
+                <button onclick="triggerAIImageGeneration('home')" class="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1" title="AIで指示通りの画像を作ります">
+                  <i data-lucide="sparkles" class="w-5 h-5"></i>
+                  <span class="text-xs font-bold hidden sm:inline">AI画像生成</span>
+                </button>
+              </div>
+              <button onclick="createPost('home')" class="px-5 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-extrabold rounded-full text-sm transition">
                 ポストする
               </button>
             </div>
