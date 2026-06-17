@@ -73,7 +73,7 @@
       <p class="text-[#71767b] text-sm mb-8 text-center">何を書いでも、どんな画像を上げても確実にバズる<br>究極の承認欲求チャージSNS。</p>
 
       <div class="w-full space-y-5 bg-[#16181c] p-6 rounded-2xl border border-[#2f3336]">
-        <!-- アカウント画像設定 (クロッピングはしません) -->
+        <!-- アカウント画像設定 (クロッピングなし) -->
         <div>
           <label class="block text-xs font-bold text-[#71767b] mb-2 uppercase tracking-wider">プロフィール画像</label>
           <div class="flex items-center space-x-4">
@@ -138,9 +138,9 @@
         <div class="p-4 border-b border-[#2f3336] flex space-x-3 bg-black">
           <img id="post-avatar" src="" alt="avatar" class="w-10 h-10 rounded-full border border-pink-500 object-cover flex-shrink-0">
           <div class="flex-1">
-            <textarea id="home-post-input" placeholder="いまどうしてる？（何を書いでも絶対にバズるよ！）" class="w-full bg-transparent border-none text-white placeholder-[#71767b] focus:ring-0 resize-none text-lg outline-none min-h-[50px]" rows="2"></textarea>
+            <textarea id="home-post-input" placeholder="いまどうしてる？（指示通りの画像生成や、完全一致の爆笑リプライが届くよ！）" class="w-full bg-transparent border-none text-white placeholder-[#71767b] focus:ring-0 resize-none text-lg outline-none min-h-[50px]" rows="2"></textarea>
             
-            <!-- 添付画像プレビュー (クロップなし：アスペクト比維持) -->
+            <!-- 添付画像プレビュー (クロップなし) -->
             <div id="home-attachment-preview-container" class="hidden relative mt-2 rounded-2xl overflow-hidden border border-[#2f3336] bg-[#16181c]">
               <img id="home-attachment-preview" src="" class="w-full h-auto max-h-96 object-contain mx-auto">
               <button onclick="removeHomeAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
@@ -156,7 +156,7 @@
                 </button>
                 <input type="file" id="post-image-input" accept="image/*" class="hidden">
 
-                <!-- AI画像生成（Pollinations AI） -->
+                <!-- AI画像生成 -->
                 <button onclick="triggerAIImageGeneration('home')" class="p-2 text-cyan-400 hover:bg-cyan-400/10 rounded-full transition flex items-center space-x-1" title="AIで指示通りの画像を作ります">
                   <i data-lucide="sparkles" class="w-5 h-5"></i>
                   <span class="text-xs font-bold hidden sm:inline">AI画像生成</span>
@@ -180,7 +180,7 @@
         </div>
       </div>
 
-      <!-- [詳細画面] シングルポスト詳細表示 (スレッド詳細画面) -->
+      <!-- [詳細画面] シングルポスト詳細表示 -->
       <div id="tab-post-detail" class="tab-content hidden">
         <div class="p-3 border-b border-[#2f3336] flex items-center space-x-4 bg-black sticky top-12 z-20">
           <button onclick="goBackToFeed()" class="p-1 hover:bg-[#16181c] rounded-full text-white transition">
@@ -220,14 +220,11 @@
 
       <!-- [タブ3] プロフィール -->
       <div id="tab-profile" class="tab-content hidden">
-        <!-- カバー画像 -->
         <div class="h-28 bg-[#1e293b] relative">
           <div class="absolute inset-0 rainbow-bg opacity-20"></div>
         </div>
         
-        <!-- プロフィール詳細 -->
         <div class="px-4 pb-4 border-b border-[#2f3336] relative bg-black">
-          <!-- アバター -->
           <div class="absolute -top-10 left-4">
             <div class="relative group">
               <img id="profile-avatar" src="" alt="avatar" class="w-20 h-20 rounded-full border-4 border-black object-cover bg-black">
@@ -237,14 +234,12 @@
             </div>
           </div>
 
-          <!-- 編集ボタン -->
           <div class="flex justify-end pt-3">
             <button onclick="openProfileEditModal()" class="px-4 py-1.5 border border-[#2f3336] hover:bg-[#16181c] text-white text-xs font-bold rounded-full transition">
               プロフィールを編集
             </button>
           </div>
 
-          <!-- 自己紹介情報 -->
           <div class="mt-4">
             <h2 id="profile-display-name" class="text-lg font-black text-white"></h2>
             <p id="profile-display-username" class="text-xs text-[#71767b]"></p>
@@ -257,7 +252,6 @@
               </div>
             </div>
 
-            <!-- フォロー・フォロワー (万バズ用特別数) -->
             <div class="flex items-center space-x-4 mt-3 text-xs">
               <span class="text-[#71767b]"><strong class="text-white font-bold">82</strong> フォロー中</span>
               <span class="text-[#71767b]"><strong id="profile-followers-count" class="text-white font-bold">128.5万</strong> フォロワー</span>
@@ -272,7 +266,6 @@
             <div class="flex-1">
               <textarea id="profile-post-input" placeholder="ここからもポストできるよ！いまどうしてる？" class="w-full bg-transparent border-none text-white placeholder-[#71767b] focus:ring-0 resize-none text-sm outline-none min-h-[40px]" rows="2"></textarea>
               
-              <!-- プロフィール投稿画像プレビュー -->
               <div id="profile-attachment-preview-container" class="hidden relative mt-2 rounded-xl overflow-hidden border border-[#2f3336] bg-[#16181c]">
                 <img id="profile-attachment-preview" src="" class="w-full h-auto max-h-64 object-contain mx-auto">
                 <button onclick="removeProfileAttachment()" class="absolute top-2 right-2 p-1.5 bg-black/70 hover:bg-black rounded-full text-white transition">
@@ -300,14 +293,13 @@
           </div>
         </div>
 
-        <!-- 自分の投稿タイムライン -->
         <div id="profile-feed" class="divide-y divide-[#2f3336]"></div>
       </div>
 
     </main>
 
     <!-- ==========================================
-         4. AI画像生成モーダル (指示通りの完全なAI画像)
+         4. AI画像生成モーダル (Pollinations AI)
          ========================================== -->
     <div id="ai-modal" class="hidden fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4">
       <div class="bg-[#16181c] w-full max-w-sm rounded-2xl border border-[#2f3336] overflow-hidden shadow-2xl">
@@ -326,13 +318,11 @@
             <textarea id="ai-prompt" placeholder="例: 宇宙を飛ぶ柴犬、ゲーム風、高画質、3D" class="w-full bg-black border border-[#2f3336] focus:border-cyan-400 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none transition" rows="3"></textarea>
           </div>
           
-          <!-- 生成ローディングスピナー -->
           <div id="ai-loading" class="hidden flex flex-col items-center justify-center py-6 space-y-3">
             <div class="w-10 h-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
             <p class="text-xs text-[#71767b]">AIが最高の画像を生成しています...</p>
           </div>
 
-          <!-- 生成プレビュー -->
           <div id="ai-preview-container" class="hidden">
             <p class="text-xs text-[#71767b] mb-2">生成された画像:</p>
             <div class="rounded-xl overflow-hidden border border-[#2f3336] bg-black">
@@ -407,9 +397,6 @@
     // ==========================================
     // グローバル状態
     // ==========================================
-    const apiKey = ""; // Gemini APIキー
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'buzzter-simulator';
-
     let currentUser = {
       name: "バズり散らかすマン",
       username: "buzz_master",
@@ -419,23 +406,21 @@
     };
 
     let posts = [];
-    let pendingOtherPosts = []; // リアルタイムで届く他人の投稿
+    let pendingOtherPosts = []; 
     let notifications = [];
     let unreadNotificationsCount = 0;
     
     let currentTab = 'home';
     let focusedPostId = null;
 
-    // 画像添付データ（クロッピングなし：そのまま格納）
     let attachedImageHome = null;
     let attachedImageProfile = null;
+    let lastUsedAIPrompt = ""; 
 
     let activeAITarget = 'home';
     let generatedImageBase64 = null;
 
-    // ==========================================
-    // 他ユーザーのテンプレート（1万いいねに達しない中堅バズ）
-    // ==========================================
+    // 他ユーザーのテンプレート（1万いいねに達しない絶妙に面白い中堅バズ）
     const otherUsersTemplates = [
       {
         name: "サバンナ高橋の隣の猫",
@@ -452,7 +437,7 @@
         timestamp: "20分前"
       },
       {
-        name: "限界社会人OLの日常",
+        name: "限界社会人OL의日常",
         username: "work_limit_ol",
         avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f472b6'/><text x='50' y='65' font-size='45' text-anchor='middle'>👩</text></svg>",
         content: "月曜日の朝に『仕事行きたくなさすぎて体がプリンになった』って上司にチャット送る夢見て飛び起きたら、本当に誤送信してて『カラメルソース多めでお願いします』って返ってきてた。今日私はどうすればいいですか？",
@@ -476,6 +461,19 @@
           { name: "うどんを愛しすぎた男", username: "udon_love", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23f87171'/><text x='50' y='65' font-size='45' text-anchor='middle'>🍜</text></svg>", content: "今日の晩御飯これにする！！天才！！", timestamp: "3分前" }
         ],
         timestamp: "1時間前"
+      },
+      {
+        name: "レトロゲーム懐古厨",
+        username: "retro_gamer_8bit",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2306b6d4'/><text x='50' y='65' font-size='45' text-anchor='middle'>🕹️</text></svg>",
+        content: "昔のゲームの取扱説明書、なんであんなに分厚くて世界観のイラストがいっぱい載っててワクワクしたんだろうな。今のゲームも好きだけど、あの紙の匂いとワクワク感は本当に宝物だった。",
+        likes: 7120,
+        reposts: 1320,
+        views: 65400,
+        replies: [
+          { name: "ドット絵職人", username: "dot_maker", avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ec4899'/><text x='50' y='65' font-size='45' text-anchor='middle'>🎨</text></svg>", content: "めちゃくちゃ分かります！裏表紙のマップとか穴が開くほど見てました…", timestamp: "40分前" }
+        ],
+        timestamp: "1.5時間前"
       }
     ];
 
@@ -487,8 +485,7 @@
         content: "ペンギンの足、実はめちゃくちゃ長いんですけど、皮下脂肪と羽毛で隠れてて見えないだけなんです。レントゲン写真見るとスクワットした状態でずっと固まってるの可愛すぎるから見てほしい。",
         likes: 7215,
         reposts: 924,
-        views: 74200,
-        replies: []
+        views: 74200
       },
       {
         name: "激辛ラーメン愛好家",
@@ -497,8 +494,16 @@
         content: "辛さ10倍の北極ラーメンに唐辛子を追加投入して食べた結果、今、お腹の中に太陽系が誕生してビッグバンを起こしています。トイレから実況しています。助けてください。",
         likes: 3105,
         reposts: 412,
-        views: 31050,
-        replies: []
+        views: 31050
+      },
+      {
+        name: "二度寝のプロ",
+        username: "sleepy_giant",
+        avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23a855f7'/><text x='50' y='65' font-size='45' text-anchor='middle'>🛌</text></svg>",
+        content: "朝のアラームが鳴ってから『あと5分…あと5分だけ…』を無限に繰り返した結果、最終的にワープして始業15分前の世界線に到着した。このタイムトラベル能力、そろそろ国際特許出願したい。",
+        likes: 8340,
+        reposts: 1120,
+        views: 82100
       }
     ];
 
@@ -537,7 +542,7 @@
         setupScreen.classList.add('hidden');
       }, 400);
 
-      showToast("🎉 BUZZTER へようこそ！万バズをお約束します。");
+      showToast("🎉 BUZZTER へようこそ！超リアルな万バズが始まります。");
     }
 
     function injectWelcomePost() {
@@ -548,7 +553,7 @@
           username: "buzzter_official",
           avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='65' font-size='45' text-anchor='middle'>👑</text></svg>"
         },
-        content: "BUZZTER（バズター）へようこそ！🚀\n\nここでは、あなたが投稿したすべてのポストが数秒で1万いいねを突破するバズり体験が可能です！\n\n💬 投稿（ポスト）をタップすると、投稿に集まった自動リプライやリアクションの詳細画面に移動します！早速タップしてみてください！",
+        content: "BUZZTER（バズター）へようこそ！🚀\n\nここでは、あなたが投稿したすべてのポストが数秒で1万いいねを突破するバズり体験が可能です！\n\n💬 投稿をタップすると、Geminiがあなたの投稿内容に合わせてリアルタイム自動生成した超リアルなリプライ（返信スレッド）を閲覧できます！今すぐ何かポストしてみましょう！",
         image: null,
         likes: 31050,
         reposts: 12480,
@@ -594,9 +599,6 @@
       renderFeed();
     }
 
-    // ==========================================
-    // 他ユーザーの定期自動投稿 (18秒に1度・1万未満バズ)
-    // ==========================================
     function setupRealtimeOtherTweets() {
       setInterval(() => {
         if (!document.getElementById('setup-screen').classList.contains('hidden')) return;
@@ -625,7 +627,7 @@
               name: "ネットの住人",
               username: "net_dweller",
               avatar: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='gray'/><text x='50' y='65' font-size='45' text-anchor='middle'>👾</text></svg>",
-              content: "これ面白いｗｗｗ",
+              content: "これわかるｗｗｗｗ",
               timestamp: "1分前"
             }
           ],
@@ -660,9 +662,6 @@
       showToast("✨ タイムラインが更新されました");
     }
 
-    // ==========================================
-    // タブ制御 & スレッド制御
-    // ==========================================
     function switchTab(tabId) {
       currentTab = tabId;
       focusedPostId = null;
@@ -712,9 +711,6 @@
       switchTab(currentTab);
     }
 
-    // ==========================================
-    // レンダリングロジック
-    // ==========================================
     function renderFeed() {
       const feedContainer = document.getElementById('feed');
       feedContainer.innerHTML = '';
@@ -799,7 +795,10 @@
     function renderDetailReplies(post) {
       const repliesList = document.getElementById('detail-replies-list');
       if (post.replies.length === 0) {
-        repliesList.innerHTML = `<div class="p-8 text-center text-[#71767b] text-sm">バズに対するリプライを生成しています...</div>`;
+        repliesList.innerHTML = `<div class="p-8 text-center text-[#71767b] text-sm flex flex-col items-center justify-center space-y-2">
+          <div class="w-6 h-6 border-2 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+          <span class="text-xs">バズを検知！AIがリアルな返信を大量生成中...</span>
+        </div>`;
         return;
       }
 
@@ -943,7 +942,6 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // 自分自身のみ超万バズさせるバーストアニメーション
       startMegaBuzz(newPostId, content, attachedImage);
     }
 
@@ -960,7 +958,6 @@
       let reposts = 0;
       let likes = 0;
 
-      // あなただけが爆発的（50万〜100万規模）にバズる
       const targetViews = Math.floor(Math.random() * 400000) + 600000;
       const targetReposts = Math.floor(targetViews * (Math.random() * 0.04 + 0.02));
       const targetLikes = Math.floor(targetViews * (Math.random() * 0.12 + 0.08));
@@ -1008,7 +1005,7 @@
             spread: 120,
             colors: ['#ff007f', '#ff00ff', '#00ffff']
           });
-          showToast("🔥 バズりが全宇宙のトレンドに入りました！");
+          showToast("🔥 バズりが頂点に達しました！世界にトレンド入り！");
         }
       }
 
@@ -1017,76 +1014,110 @@
     }
 
     // ==========================================
-    // Gemini 3-Flashによる自動リプライ生成
+    // 【書き換え完了】Cloudflare Workers経由でGemini AI返信を完全取得
     // ==========================================
-    async function generateAIReplies(postId, userPostContent, imageBase64) {
+    async function generateAIReplies(postId, userPostContent, imageSrc) {
       const systemPrompt = `
-        あなたは、今ものすごくバズっているSNSのポストに対して反応する個性的でリアルな一般ユーザーたちです。
-        投稿内容（テキスト、画像がある場合はその内容）に合わせて、リアルなTwitterリプライを「5件」作成してください。
+        あなたは、今ものすごくバズっているSNS(旧Twitter/X)のポストに対してリアルタイムで反応する、個性豊かでユーモア溢れる一般の日本人ユーザーたちです。
+        提供されたユーザーのポストテキスト、および添付画像情報を完全に読み込み、内容に【100%完全にマッチした】、リアルでユニークな日本語のリプライを「5件」作成してください。
         
-        【キャラクター5名の役割設定】
-        1. 「ネットスラング全開の一般ユーザー（共感・大爆笑）」: 草、ほんとこれ、天才すぎ、腹ちぎれたなどの俗語をふんだんに使用。
-        2. 「おもしろ大喜利ツッコミ」: 投稿内容に対する秀逸なたとえツッコミや、面白おかしいボケリアクション。
-        3. 「真面目に感動するファン」: 言語化が上手くて本当に刺さったことを熱量高く伝えるユーザー。
-        4. 「バズり時に現れる便乗アカウント」: 『この機会に私の猫も見てください』といった面白い便乗系。
-        5. 「外国語で大興奮するファン」: 英語やユニークな翻訳風の日本語で、最高にクールだと叫ぶ海外勢。
+        【キャラクター5名の異なる属性】
+        1. 「激しい共感・大爆笑派」: 現代のネットスラング（草、それな、天才すぎる、腹痛い、など）を自然に散りばめ、投稿内容に猛烈にツボる。
+        2. 「おもしろ大喜利ツッコミ派」: 投稿内容や添付画像に対して、ウィットに富んだ角度からたとえツッコミや面白いツッコミを入れる。
+        3. 「真面目に感動するファン」: 言語化能力が非常に高く、投稿の本質を優しくかつ深く絶賛・共感する。
+        4. 「少しおせっかい・便乗派」: 『この流れで便乗して私の愛猫も置いておきますね』など、バズった時ならではの便乗リプライ。
+        5. 「海外の興奮したニキ（日本語翻訳風または英語）」: 英語や、愛嬌のある機械翻訳風の日本語で熱狂的に愛と賛辞を送る海外アカウント。
 
-        【重要：出力形式】
-        必ず以下の構成を持つJSONオブジェクトの配列としてのみ出力してください。余計なマークダウンや説明は一切含まず、プレーンなJSONオブジェクトのみを返してください。
+        【重要ルール】
+        - 投稿内容が「真面目なネタ」「おもしろいネタ」「美しいイラスト画像」など、何であれ【文脈に完璧に合致した返信】にすること。
+        - 添付画像情報がある場合は、画像に描かれている内容（例：猫、宇宙、ラーメンなど）に対しても、必ずリプライ内で具体的に触れてください。
+        
+        【出力形式】
+        必ず以下の構成を持つJSONオブジェクトの配列（ARRAY）としてのみ出力してください。バッククォートなどのマークダウン装飾、解説、余計なテキストは一切含んではいけません。完璧なプレーンJSONのみを返してください。
         [
           {
-            "name": "ユーザー名(日本語)",
-            "username": "英数字のユーザーID",
-            "emoji": "アバターにふさわしい絵文字1文字",
-            "content": "リプライの返信本文",
-            "color": "アバターの背景色HEX(例: #ff007f)"
+            "name": "アカウント名(日本語)",
+            "username": "英数字ユーザーID",
+            "emoji": "ふさわしい絵文字1文字",
+            "content": "完全文脈一致のリアルなリプライ本文",
+            "color": "アバター用背景色HEX"
           },
           ...
         ]
       `;
 
-      let payloadContents = [];
-      let promptText = `ポスト内容: "${userPostContent}"`;
+      let promptText = `【今回のポスト内容】\nテキスト: "${userPostContent}"`;
+      let payloadParts = [{ text: promptText }];
 
-      if (imageBase64 && imageBase64.startsWith('data:image')) {
-        promptText += `\n(画像が添付されています。画像の内容も含めて、面白おかしく反応・ツッコミをしてください。)`;
-        const base64Data = imageBase64.split(',')[1];
-        payloadContents = [{
-          role: "user",
-          parts: [
+      // 画像情報の追加
+      if (imageSrc) {
+        if (imageSrc.startsWith('data:image')) {
+          const base64Data = imageSrc.split(',')[1];
+          promptText += `\n(画像ファイルが添付されています。画像の内容を見て感想を交えてください。)`;
+          payloadParts = [
             { text: promptText },
             { inlineData: { mimeType: "image/png", data: base64Data } }
-          ]
-        }];
-      } else if (imageBase64) {
-        // AIで生成された画像（URL）の場合のテキストフォールバック指示
-        promptText += `\n(AIが生成した画像 "${imageBase64}" も添付されています。)`;
-        payloadContents = [{
-          role: "user",
-          parts: [{ text: promptText }]
-        }];
-      } else {
-        payloadContents = [{
-          role: "user",
-          parts: [{ text: promptText }]
-        }];
+          ];
+        } else {
+          const imageDescription = lastUsedAIPrompt ? lastUsedAIPrompt : "ユーザーが指示したAI生成アート";
+          promptText += `\n(AIによって生成された画像が添付されています。画像テーマ: "${imageDescription}"。画像の内容について詳しく言及してください。)`;
+          payloadParts = [{ text: promptText }];
+        }
       }
 
+      const payloadContents = [{
+        role: "user",
+        parts: payloadParts
+      }];
+
       try {
-        const response = await callGeminiAPI(systemPrompt, payloadContents);
+        // 先ほど作成したCloudflare WorkersのURLをここに入力
+        const workerUrl = "https://buzzter.kengono0710.workers.dev";
+
+        // Cloudflare Workers経由で安全に通信を送信
+        const response = await fetch(workerUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: payloadContents,
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+            generationConfig: {
+              responseMimeType: "application/json",
+              responseSchema: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: {
+                    name: { type: "STRING" },
+                    username: { type: "STRING" },
+                    emoji: { type: "STRING" },
+                    content: { type: "STRING" },
+                    color: { type: "STRING" }
+                  },
+                  required: ["name", "username", "emoji", "content", "color"]
+                }
+              }
+            }
+          })
+        });
+
+        if (!response.ok) throw new Error("Workers通信エラー");
+        
+        const data = await response.json();
         let replies = [];
-        try {
-          let cleanJSON = response.replace(/```json/g, '').replace(/```/g, '').trim();
+
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+          const responseText = data.candidates[0].content.parts[0].text;
+          let cleanJSON = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
           replies = JSON.parse(cleanJSON);
-        } catch (e) {
-          console.error("JSON parse error", e);
-          replies = getFallbackReplies(userPostContent);
+        } else {
+          throw new Error("想定外のデータ構造");
         }
 
         deliverRepliesStepByStep(postId, replies);
 
       } catch (error) {
-        console.error("Gemini API error", error);
+        console.error("Gemini AIリプライ取得失敗:", error);
         const fallbackReplies = getFallbackReplies(userPostContent);
         deliverRepliesStepByStep(postId, fallbackReplies);
       }
@@ -1134,58 +1165,16 @@
 
           showToast(`💬 @${rep.username} さんからリプライが届きました！`);
 
-        }, (index + 1) * 1500 + (Math.random() * 1000));
+        }, (index + 1) * 2000 + (Math.random() * 800));
       });
     }
 
-    async function callGeminiAPI(systemPrompt, contents) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-      const payload = {
-        contents: contents,
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: "ARRAY",
-            items: {
-              type: "OBJECT",
-              properties: {
-                name: { type: "STRING" },
-                username: { type: "STRING" },
-                emoji: { type: "STRING" },
-                content: { type: "STRING" },
-                color: { type: "STRING" }
-              },
-              required: ["name", "username", "emoji", "content", "color"]
-            }
-          }
-        }
-      };
-
-      let delay = 1000;
-      for (let i = 0; i < 5; i++) {
-        try {
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (response.ok) {
-            const data = await response.json();
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          }
-        } catch (e) {}
-        await new Promise(resolve => setTimeout(resolve, delay));
-        delay *= 2;
-      }
-      throw new Error("API通信失敗");
-    }
-
     function getFallbackReplies(content) {
+      const keyword = content.substring(0, 8);
       return [
-        { name: "ネコ大好き侍", username: "cat_samurai", emoji: "🐱", color: "#f59e0b", content: "おもろすぎて腹ちぎれたｗｗｗ天才だろ" },
-        { name: "バズ監視ボット", username: "buzz_watcher", emoji: "🤖", color: "#3b82f6", content: "【速報】本日のバズ大賞が確定しました。" },
-        { name: "たくや@エンジニア", username: "takuya_dev", emoji: "💻", color: "#10b981", content: "めちゃくちゃ深く刺さりました。共感しかない。" }
+        { name: "ネットの目撃者", username: "net_watcher", emoji: "👁️", color: "#f59e0b", content: `「${keyword}...」についての投稿、おもろすぎて腹よじれたｗｗ 拡散されるのも納得のセンスです！` },
+        { name: "バズ検知ボット", username: "buzz_watcher", emoji: "🤖", color: "#3b82f6", content: `【急上昇】こちらの投稿、1秒間に500いいねの驚異的ペースでバズっています。` },
+        { name: "たくや@限界開発者", username: "takuya_dev", emoji: "💻", color: "#10b981", content: `まさか「${keyword}...」でここまで深く心をえぐられるとは思わなかった。圧倒的共感。` }
       ];
     }
 
@@ -1305,9 +1294,6 @@
       showToast("🧹 すべての通知を既読にしました。");
     }
 
-    // ==========================================
-    // トースト
-    // ==========================================
     function showToast(message) {
       const container = document.getElementById('toast-container');
       const toast = document.createElement('div');
@@ -1329,7 +1315,7 @@
     }
 
     // ==========================================
-    // 【クロッピング廃止】端末内の画像選択 ＆ そのままセット
+    // 端末内の画像選択 ＆ そのままセット
     // ==========================================
     function setupAttachmentInputs() {
       document.getElementById('post-image-input').addEventListener('change', function(e) {
@@ -1351,7 +1337,6 @@
       reader.onload = function(e) {
         const imageResult = e.target.result;
 
-        // クロッピングを一切せず、そのまま保存＆プレビュー表示！
         if (targetType === 'home') {
           attachedImageHome = imageResult;
           document.getElementById('home-attachment-preview').src = imageResult;
@@ -1388,7 +1373,7 @@
     }
 
     // ==========================================
-    // 【指示通りの本物のAI画像生成】 (Pollinations AI)
+    // AI画像生成 (Pollinations AI)
     // ==========================================
     function triggerAIImageGeneration(target) {
       activeAITarget = target;
@@ -1416,18 +1401,15 @@
       btn.classList.add('hidden');
       loader.classList.remove('hidden');
 
-      // 毎回別の画像を作り出すためのシード値
       const seed = Math.floor(Math.random() * 999999);
-      
-      // 指示通りの本物のAI画像を出力する最強API (Pollinations AI)
       const aiUrl = `https://image.pollinations.ai/p/${encodeURIComponent(prompt)}?width=800&height=800&seed=${seed}&nologo=true`;
 
       const previewImg = document.getElementById('ai-preview-img');
       previewImg.src = aiUrl;
 
-      // 画像のダウンロード完了時にプレビューを表示する
       previewImg.onload = function() {
         generatedImageBase64 = aiUrl;
+        lastUsedAIPrompt = prompt; 
         loader.classList.add('hidden');
         document.getElementById('ai-preview-container').classList.remove('hidden');
         document.getElementById('ai-apply-btn').classList.remove('hidden');
